@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Homepage = () => {
+const Write = () => {
     return (
         <div>
-            Homepage
+            Wrote
         </div>
     )
 }
 
-export default Homepage
+export default Write
