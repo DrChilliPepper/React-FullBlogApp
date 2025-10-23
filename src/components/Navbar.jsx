@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { IKImage } from 'imagekitio-react'
+import Image from "./Image"
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
@@ -6,7 +8,7 @@ const Navbar = () => {
         <div className='w-full h-16 md:h-20 flex items-center justify-between'>
             {/*LOGO*/}
             <div className='flex items-center gap-4 text-2xl font-bold'>
-                <img src="/logo.png" className="w-8 h-8" alt="" />
+                <Image src="logo.png" alt="Blog logo" w={32} h={32} />
                 <span>Shulog</span>
             </div>
             {/*Mobile Menu*/}
@@ -16,7 +18,7 @@ const Navbar = () => {
                     {open ? "X" : "☰"}
                 </div>
                 {/*Mobile link list*/}
-                <div className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg absolute top-16 ${open ? "-right-0" : "-right-[100%"} trainsition-all ease-in-out`}>
+                <div className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg absolute top-16 ${open ? "-right-0" : "-right-[100%]"} transition-all ease-in-out bg-[rgba(68,68,68,1)]`}>
                     <a href="/">Home</a>
                     <a href="/">Trending</a>
                     <a href="/">Most Popular</a>
