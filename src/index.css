@@ -9,3 +9,7 @@ body {
     font-family: "Montserrat", sans-serif;
     color: white;
 }
+
+.animatedButton {
+    animation-duration: 10000ms;
+}
