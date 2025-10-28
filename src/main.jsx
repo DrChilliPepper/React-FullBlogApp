@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import 'react-quill-new/dist/quill.snow.css'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Homepage from "./routes/Homepage.jsx"

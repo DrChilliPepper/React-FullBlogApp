@@ -13,3 +13,29 @@ body {
 .animatedButton {
     animation-duration: 10000ms;
 }
+
+.ql-toolbar {
+    background-color: transparent;
+    border: 1px solid rgba(214, 214, 214, 0.171) !important;
+}
+
+.ql-picker-label {
+    color: white;
+    background-color: rgba(53, 53, 53, 1) !important;
+}
+
+.ql-picker-options {
+    background-color: rgba(53, 53, 53, 1);
+}
+
+.ql-container {
+    border: none !important;
+}
+
+.ql-stroke {
+    stroke: white !important;
+}
+
+.ql-fill {
+    fill: white;
+}
