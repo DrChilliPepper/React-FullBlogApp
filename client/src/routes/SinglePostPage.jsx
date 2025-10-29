@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from '../components/Image'
+import Image from '../components/Image.jsx'
 import { Link } from 'react-router-dom'
 import PostMenuActions from "../components/PostMenuActions.jsx"
 import Search from "../components/Search.jsx"
