@@ -9,10 +9,10 @@ import { clerkMiddleware, requireAuth } from "@clerk/express";
 
 dotenv.config();
 
-// const app = express()
-// app.use(clerkMiddleware())
-// app.use("/webhooks", webhookRouter)
-// app.use(express.json())
+const app = express()
+app.use(clerkMiddleware())
+app.use("/webhooks", webhookRouter)
+app.use(express.json())
 
 // app.get("/auth-state", (req, res) => {
 //     const authState = req.auth();
