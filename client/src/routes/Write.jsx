@@ -2,13 +2,17 @@ import React, { useState } from 'react'
 import { useAuth, useUser } from '@clerk/clerk-react';
 import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
-import { useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
 
 const Write = () => {
 
     const { isLoaded, isSignedIn } = useUser()
     const [value, setValue] = useState('');
+
+    const navigate = useNavigate()
     const { getToken } = useAuth();
 
     const mutation = useMutation({
@@ -20,6 +24,10 @@ const Write = () => {
                 }
             })
         },
+        onSuccess: (res) => {
+            toast.success("Post has been created!")
+            navigate(`/${res.data.slug}`)
+        }
     })
 
     if (!isLoaded) {
@@ -68,9 +76,10 @@ const Write = () => {
                 </div>
                 <textarea className='p-2 rounded-xl bg-[rgba(53,53,53,1)] shadow-md' name="desc" placeholder='A short note' />
                 <ReactQuill theme="snow" className='flex-1 rounded-xl bg-[rgba(53,53,53,1)] shadow-md text-white' value={value} onChange={setValue} />
-                <button className='bg-[rgba(255,119,119,1)] text-white font-medium rounded-xl mt-4 p-2 w-36'>
-                    Send
+                <button disabled={mutation.isPending} className='bg-[rgba(255,119,119,1)] text-white font-medium rounded-xl mt-4 p-2 w-36 disabled:bg-[rgba(53,53,53,1)] disabled:cursor-not-allowed'>
+                    {mutation.isPending ? "Loading..." : "Send"}
                 </button>
+                {mutation.isError && <span>{mutation.error.message}</span>}
             </form>
         </div>
     )
