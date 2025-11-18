@@ -75,7 +75,17 @@ const Write = () => {
                     </select>
                 </div>
                 <textarea className='p-2 rounded-xl bg-[rgba(53,53,53,1)] shadow-md' name="desc" placeholder='A short note' />
-                <ReactQuill theme="snow" className='flex-1 rounded-xl bg-[rgba(53,53,53,1)] shadow-md text-white' value={value} onChange={setValue} />
+                <div className='flex'>
+                    <div className='flex flex-col gap-2 mr-2'>
+                        <div className='cursor-pointer'>
+                            🖼️
+                        </div>
+                        <div className='cursor-pointer'>
+                            📹
+                        </div>
+                    </div>
+                    <ReactQuill theme="snow" className='flex-1 rounded-xl bg-[rgba(53,53,53,1)] shadow-md text-white' value={value} onChange={setValue} />
+                </div>
                 <button disabled={mutation.isPending} className='bg-[rgba(255,119,119,1)] text-white font-medium rounded-xl mt-4 p-2 w-36 disabled:bg-[rgba(53,53,53,1)] disabled:cursor-not-allowed'>
                     {mutation.isPending ? "Loading..." : "Send"}
                 </button>
