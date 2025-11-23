@@ -6,6 +6,24 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"
+import { IKContext, IKUpload } from "imagekitio-react";
+
+
+const authenticator = async () => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/posts/upload-auth`);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        const { signature, expire, token } = data;
+        return { signature, expire, token };
+    } catch (error) {
+        throw new Error(`Authentication request failed: ${error.message}`)
+    }
+}
 
 const Write = () => {
 
@@ -59,9 +77,19 @@ const Write = () => {
                 Create a New Post
             </h1>
             <form onSubmit={handleSubmit} className='flex flex-col gap-6 flex-1 mb-6'>
-                <button className='w-max p-2 shadow-md rounded-xl text-sm text-white bg-[rgba(53,53,53,1)]'>
+                {/* <button className='w-max p-2 shadow-md rounded-xl text-sm text-white bg-[rgba(53,53,53,1)]'>
                     Add a cover image
-                </button>
+                </button> */}
+                <IKContext
+                    publicKey={import.meta.env.VITE_IK_PUBLIC_KEY}
+                    urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
+                    authenticator={authenticator}>
+                    <IKUpload
+                        fileName="test"
+                    // onError={onError}
+                    // onSuccess={onSuccess}
+                    />
+                </IKContext>
                 <input className='text-4xl font-semibold bg-transparent outline-none' type="text" placeholder='My Cringe Story' name='title' />
                 <div className='flex items-center gap-4'>
                     <label htmlFor="" className='text-sm'>Choose a category:</label>

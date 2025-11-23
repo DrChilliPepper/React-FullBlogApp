@@ -65,6 +65,6 @@ const imagekit = new ImageKit({
 })
 
 export const uploadAuth = async (req, res) => {
-    const result = imagekit.getgetAuthenticatorParamters();
+    const result = imagekit.getAuthenticationParameters();
     res.send(result)
 }
