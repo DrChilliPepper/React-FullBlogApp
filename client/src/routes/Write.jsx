@@ -29,6 +29,8 @@ const Write = () => {
 
     const { isLoaded, isSignedIn } = useUser()
     const [value, setValue] = useState('');
+    const [cover, setCover] = useState('')
+    const [progress, setProgress] = useState(0);
 
     const navigate = useNavigate()
     const { getToken } = useAuth();
@@ -71,6 +73,19 @@ const Write = () => {
         mutation.mutate(data)
     }
 
+    const onError = (err) => {
+        console.log(err)
+        toast.error("Image upload failed!")
+    }
+    const onSuccess = (res) => {
+        console.log(res)
+        setCover(res.url)
+    }
+    const onUploadProgress = (progress) => {
+        console.log(progress)
+        setProgress(Math.round((progress.loaded / progress.total) * 100))
+    }
+
     return (
         <div className='h-[calc(100vh-64px)] md:h-[calc(100vh-80px)] flex flex-col gap-6'>
             <h1 className='text-cl font-light'>
@@ -85,9 +100,11 @@ const Write = () => {
                     urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
                     authenticator={authenticator}>
                     <IKUpload
-                        fileName="test"
-                    // onError={onError}
-                    // onSuccess={onSuccess}
+                        // fileName="test"
+                        useUniqueFileName
+                        onError={onError}
+                        onSuccess={onSuccess}
+                        onUploadProgress={onUploadProgress}
                     />
                 </IKContext>
                 <input className='text-4xl font-semibold bg-transparent outline-none' type="text" placeholder='My Cringe Story' name='title' />
@@ -114,9 +131,10 @@ const Write = () => {
                     </div>
                     <ReactQuill theme="snow" className='flex-1 rounded-xl bg-[rgba(53,53,53,1)] shadow-md text-white' value={value} onChange={setValue} />
                 </div>
-                <button disabled={mutation.isPending} className='bg-[rgba(255,119,119,1)] text-white font-medium rounded-xl mt-4 p-2 w-36 disabled:bg-[rgba(53,53,53,1)] disabled:cursor-not-allowed'>
+                <button disabled={mutation.isPending || 0 > progress && progress < 100} className='bg-[rgba(255,119,119,1)] text-white font-medium rounded-xl mt-4 p-2 w-36 disabled:bg-[rgba(53,53,53,1)] disabled:cursor-not-allowed'>
                     {mutation.isPending ? "Loading..." : "Send"}
                 </button>
+                {"Progress:" + progress}
                 {mutation.isError && <span>{mutation.error.message}</span>}
             </form>
         </div>
