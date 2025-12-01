@@ -3,8 +3,14 @@ import Post from "../models/post.model.js"
 import User from "../models/user.model.js"
 
 export const getPosts = async (req, res) => {
-    const posts = await Post.find()
-    res.status(200).json(posts);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 2;
+    const posts = await Post.find().limit(limit).skip((page - 1) * limit);
+
+    const totalposts = await Post.countDocuments();
+    const hasMore = page * limit < totalposts;
+
+    res.status(200).json({ posts, hasMore });
 }
 export const getPost = async (req, res) => {
     const post = await Post.findOne({ slug: req.params.slug })
@@ -49,14 +55,21 @@ export const deletePost = async (req, res) => {
 
     const user = await User.findOne({ clerkUserId });
 
-    const deletedPost = await Post.findOneAndDelete({ _id: req.params.id, user: user._id });
-
-    if (!deletePost) {
-        return res.status(403).json("You can delete only your posts!")
+    if (!user) {
+        return res.status(404).json("User not found");
     }
 
-    res.status(200).json("Post deleted")
-}
+    const deletedPost = await Post.findOneAndDelete({
+        _id: req.params.id,
+        user: user._id
+    });
+
+    if (!deletedPost) {
+        return res.status(403).json("You can delete only your posts!");
+    }
+
+    return res.status(200).json("Post deleted");
+};
 
 const imagekit = new ImageKit({
     urlEndpoint: process.env.IK_URL_ENDPOINT,

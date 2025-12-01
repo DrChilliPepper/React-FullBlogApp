@@ -50,7 +50,7 @@ const Upload = ({ children, type, setProgress, setData }) => {
     }
     const onSuccess = (res) => {
         console.log(res)
-        setData(res.url)
+        setData(res)
     }
     const onUploadProgress = (progress) => {
         console.log(progress)
