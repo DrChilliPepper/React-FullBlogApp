@@ -17,9 +17,9 @@ const PostListItem = ({ post }) => {
                 <Link to={`${post.slug}`} className="text-4xl font-semibold">{post.title}</Link>
                 <div className="flex items-center gap-2 text-white text-sm">
                     <span>Written by</span>
-                    <Link className="text-[rgba(255,119,119,1)]">Shuchith</Link>
+                    <Link className="text-[rgba(255,119,119,1)]">{post.user.username}</Link>
                     <span>on</span>
-                    <Link className='text-[rgba(255,119,119,1)]'>Web Design</Link>
+                    <Link className='text-[rgba(255,119,119,1)]'>{post.category}</Link>
                     <span>{format(post.createdAt)}</span>
                 </div>
                 <p>
