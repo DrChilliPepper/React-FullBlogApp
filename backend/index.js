@@ -23,20 +23,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.get("/auth-state", (req, res) => {
-//     const authState = req.auth();
-//     res.json(authState)
-// });
-// app.get("/protect", (req, res) => {
-//     const { userId } = req.auth();
-//     if (!userId) {
-//         return res.status(401).json("Not Authorized")
-//     }
-//     res.status(200).json("Content")
-// });
-// app.get("/protect2", requireAuth(), (req, res) => {
-// });
-
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
