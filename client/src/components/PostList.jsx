@@ -49,10 +49,10 @@ const PostList = () => {
             }
         >
             {allPosts.map(post => (
-                <>
+                <React.Fragment key={post._id}>
                     <PostListItem key={post._id} post={post} />
                     <hr className="my-8 border-white opacity-30" />
-                </>
+                </React.Fragment>
             ))}
         </InfiniteScroll>
     );

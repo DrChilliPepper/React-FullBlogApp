@@ -14,7 +14,7 @@ const PostListItem = ({ post }) => {
             )}
             {/**details */}
             <div className='flex flex-col gap-4 xl:w-2/3'>
-                <Link to={`${post.slug}`} className="text-4xl font-semibold">{post.title}</Link>
+                <Link to={`/${post.slug}`} className="text-4xl font-semibold">{post.title}</Link>
                 <div className="flex items-center gap-2 text-white text-sm">
                     <span>Written by</span>
                     <Link className="text-[rgba(255,119,119,1)]">{post.user.username}</Link>
@@ -25,7 +25,7 @@ const PostListItem = ({ post }) => {
                 <p>
                     {post.desc}
                 </p>
-                <Link to={`${post.slug}`} className='underline text-[rgba(255,119,119,1)] text-sm'>Read More</Link>
+                <Link to={`/${post.slug}`} className='underline text-[rgba(255,119,119,1)] text-sm'>Read More</Link>
             </div>
         </div>
     )

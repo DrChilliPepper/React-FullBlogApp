@@ -12,7 +12,7 @@ const Homepage = () => {
                 <Link to="/">Home</Link>
                 <span>•</span>
                 <span className='text-white'>
-                    Blogs and Articles
+                    Articles and Posts
                 </span>
             </div>
             {/*INTRODUCTION*/}

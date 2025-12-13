@@ -5,47 +5,60 @@ import PostMenuActions from "../components/PostMenuActions.jsx"
 import Search from "../components/Search.jsx"
 import Comments from '../components/Comments.jsx'
 import Comment from '../components/Comment.jsx'
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
+import { useParams } from 'react-router-dom'
+import DOMPurify from 'dompurify'
+import { format } from "timeago.js"
+
+const fetchPost = async (slug) => {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${slug}`);
+    return res.data;
+}
 
 const SinglePostPage = () => {
+
+    const { slug } = useParams();
+    const { isPending, error, data } = useQuery({
+        queryKey: ["post", slug],
+        queryFn: () => fetchPost(slug),
+        enabled: !!slug
+    });
+    if (isPending) return "Loading..."
+    if (error) return "Something went wrong..." + error.message
+    if (!data) return "Post not found!";
+
     return (
         <div className='flex flex-col gap-8'>
             {/**details*/}
             <div className='flex gap-8'>
                 <div className='lg:w-3/5 flex flex-col gap-8'>
                     <h1 className='text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold'>
-                        Title sample
+                        {data.title}
                     </h1>
                     <div className='flex items-center gap-2 text-white text-sm'>
                         <span>
                             Written by
                         </span>
-                        <Link className='text-[rgba(255,119,119,1)] '>Shuchith</Link>
+                        <Link className='text-[rgba(255,119,119,1)] '>{data.user.username}</Link>
                         <span>on</span>
-                        <Link>Web Design</Link>
-                        <span>2 days ago</span>
+                        <Link>{data.category}</Link>
+                        <span>{format(data.createdAt)}</span>
                     </div>
                     <p className='text-white font-medium'>
-                        Sampe paragraph summary
+                        {data.desc}
                     </p>
                 </div>
-                <div className='hidden lg:block w-2/5'>
-                    <Image src="postImg.jpeg" w="600" className="rounded-2xl" />
-                </div>
+                {data.img && <div className='hidden lg:block w-2/5'>
+                    <Image src={data.img} w="600" className="rounded-2xl" />
+                </div>}
             </div>
             {/**Content */}
             <div className='flex flex-col md:flex-row gap-12'>
                 {/**text */}
-                <div className='lg:text-lg flex flex-col gap-6 text-justify'>
-                    <p>
-                        Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text Random text
-                    </p>
-                    <p>
-                        Random text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhg
-                    </p>
-                    <p>
-                        Random text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhgRandom text be like aukghbakpjgdhbf;lsajghbal;jfghk;afjgha;fkjhg
-                    </p>
-                </div>
+                <div className='lg:text-lg flex flex-col gap-6 text-justify' dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(data.content)
+                }} />
                 {/**menu */}
                 <div className='px-4 h-max sticky top-8'>
                     <h1 className='mb-4 text-sm font-medium'>
@@ -53,8 +66,8 @@ const SinglePostPage = () => {
                     </h1>
                     <div className='flex flex-col gap-4'>
                         <div className='flex items-center gap-8'>
-                            <Image src="userImg.jpeg" className="w-12 h-12 rounded-full object-cover" w="48" h="48" />
-                            <Link className='text-[rgba(255,119,119,1)]'>Shuchith</Link>
+                            {data.user.img && <Image src={data.user.img} className="w-12 h-12 rounded-full object-cover" w="48" h="48" />}
+                            <Link className='text-[rgba(255,119,119,1)]'>{data.user.username}</Link>
                         </div>
                         <p className='text-sm text-white'>
                             User description be like sameple txext
@@ -82,7 +95,7 @@ const SinglePostPage = () => {
                     <Search />
                 </div>
             </div>
-            <Comments />
+            <Comments postId={data._id} />
         </div>
     )
 }
