@@ -3,6 +3,7 @@ import { Webhook } from "svix";
 import User from "../models/user.model.js";
 dotenv.config();
 
+console.log("Webhook hit")
 export const clerkWebHook = async (req, res) => {
     const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
@@ -18,7 +19,7 @@ export const clerkWebHook = async (req, res) => {
     try {
         evt = wh.verify(payload, headers);
     } catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             message: "Webhook verification failed"
         })
     }
@@ -29,10 +30,21 @@ export const clerkWebHook = async (req, res) => {
             clerkUserId: evt.data.id,
             username: evt.data.username || evt.data.email_addresses[0].email_address,
             email: evt.data.email_addresses[0].email_address,
-            img: evt.data.profile_image_url
+            img: evt.data.profile_image_url || null
         })
         await newUser.save()
     }
+    if (evt.type === "user.updated") {
+        await User.findOneAndUpdate(
+            { clerkUserId: evt.data.id },
+            {
+                username: evt.data.username || evt.data.email_addresses[0].email_address,
+                email: evt.data.email_addresses[0].email_address,
+                img: evt.data.profile_image_url || null
+            }
+        );
+    }
+
 
     return res.status(200).json({
         message: "WebHook recieved",

@@ -66,7 +66,16 @@ const SinglePostPage = () => {
                     </h1>
                     <div className='flex flex-col gap-4'>
                         <div className='flex items-center gap-8'>
-                            {data.user.img && <Image src={data.user.img} className="w-12 h-12 rounded-full object-cover" w="48" h="48" />}
+                            {data.user.img && (
+                                <div className="w-12 h-12 rounded-full overflow-hidden">
+                                    <Image
+                                        src={data.user.img}
+                                        className="w-full h-full object-cover"
+                                        w="48"
+                                        h="48"
+                                    />
+                                </div>
+                            )}
                             <Link className='text-[rgba(255,119,119,1)]'>{data.user.username}</Link>
                         </div>
                         <p className='text-sm text-white'>
