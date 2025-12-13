@@ -9,8 +9,8 @@ const MainCategories = () => {
                 <Link to="/posts" className='bg-[rgb(41,41,41)] text-white rounded-full px-4 py-2'>All posts</Link>
                 <Link to="/posts?cat=web-design" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Web Design</Link>
                 <Link to="/posts?cat=development" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Development</Link>
-                <Link to="/posts?cat=databases" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Piracy</Link>
-                <Link to="/posts?cat=seo" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Search Engines</Link>
+                <Link to="/posts?cat=piracy-talks" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Piracy</Link>
+                <Link to="/posts?cat=brainrot" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Brainrot</Link>
                 <Link to="/posts?cat=marketing" className='hover:bg-[rgba(53,53,53,1)] text-white rounded-full px-4 py-2'>Marketing</Link>
             </div>
             <span className='text-xl font-medium'>
