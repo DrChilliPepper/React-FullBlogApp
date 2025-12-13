@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import PostMenuActions from "../components/PostMenuActions.jsx"
 import Search from "../components/Search.jsx"
 import Comments from '../components/Comments.jsx'
-import Comment from '../components/Comment.jsx'
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useParams } from 'react-router-dom'
@@ -86,7 +85,7 @@ const SinglePostPage = () => {
                             <Link><Image src="instagram.svg" /></Link>
                         </div>
                     </div>
-                    <PostMenuActions />
+                    <PostMenuActions post={data} />
                     <h1 className='mt-8 mb-4 text-sm font-medium'>
                         Categories
                     </h1>
