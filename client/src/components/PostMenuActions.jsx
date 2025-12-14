@@ -27,6 +27,7 @@ const PostMenuActions = ({ post }) => {
     },
   });
 
+  const isAdmin = user?.publicMetadata?.role === "admin" || false;
   const isSaved = savedPosts?.some((p) => p === post._id) || false;
 
   const deleteMutation = useMutation({
@@ -104,7 +105,7 @@ const PostMenuActions = ({ post }) => {
         </span>
         {saveMutation.isPending && <span className='text-xs'>(In Progress..)</span>}
       </div>}
-      {user && (post.user.username === user.username) && (<div className='flex items-center gap-2 py-2 text-sm cursor-pointer' onClick={handleDelete}>
+      {user && (post.user.username === user.username || isAdmin) && (<div className='flex items-center gap-2 py-2 text-sm cursor-pointer' onClick={handleDelete}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
