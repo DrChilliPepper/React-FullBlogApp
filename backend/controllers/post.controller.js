@@ -26,7 +26,6 @@ export const getPosts = async (req, res) => {
         if (!user) {
             return res.status(404).json("No post found!")
         }
-
         query.user = user._id
     }
 
