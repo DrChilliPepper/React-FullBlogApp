@@ -94,3 +94,28 @@ export const uploadAuth = async (req, res) => {
     const result = imagekit.getAuthenticationParameters();
     res.send(result)
 }
+export const featurePost = async (req, res) => {
+    const { userId: clerkUserId, sessionClaims } = req.auth();
+    if (!clerkUserId) {
+        return res.status(401).json("Not authorized");
+    }
+    const postId = req.body.postId
+
+    const role = sessionClaims?.metadata?.role || "user"
+
+    if (role !== "admin") {
+        return res.status(403).json("You cannot feature posts!");
+    }
+
+    const post = await Post.findById(postId)
+
+    if (!post) {
+        return res.status(404).json("Post not found")
+    }
+
+    const isFeatured = post.isFeatured
+
+    const updatedPost = await Post.findByIdAndUpdate(postId, { isFeatured: !isFeatured }, { new: true })
+
+    return res.status(200).json(updatedPost);
+};
