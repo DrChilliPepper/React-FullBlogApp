@@ -1,7 +1,7 @@
 import User from "../models/user.model.js"
 
 export const getUserSavedPosts = async (req, res) => {
-    const clerkUserId = req.auth.userId;
+    const { userId: clerkUserId } = req.auth()
 
     if (!clerkUserId) {
         return res.status(401).json("Not authenticated")
