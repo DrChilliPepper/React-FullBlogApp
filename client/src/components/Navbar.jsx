@@ -33,6 +33,7 @@ const Navbar = () => {
                     <Link to="/">Trending</Link>
                     <Link to="/">Most Popular</Link>
                     <Link to="/">About</Link>
+                    <Link to="/saved">Saved</Link>
                     <a href="">
                         <button className='py-2 px-4 rounded-3xl bg-white text-black'>
                             Login
@@ -46,6 +47,7 @@ const Navbar = () => {
                 <Link to="/">Trending</Link>
                 <Link to="/">Most Popular</Link>
                 <Link to="/">About</Link>
+                <Link to="/saved">Saved</Link>
                 <SignedOut>
                     <Link to="/login">
                         <button className='py-2 px-4 rounded-3xl bg-white text-black'>

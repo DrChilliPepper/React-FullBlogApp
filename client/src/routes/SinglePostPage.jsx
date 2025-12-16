@@ -30,8 +30,8 @@ const SinglePostPage = () => {
     return (
         <div className='flex flex-col gap-8'>
             {/**details*/}
-            <div className='flex gap-8'>
-                <div className='lg:w-3/5 flex flex-col gap-8'>
+            <div className='flex gap-8 items-start'>
+                <div className='lg:w-3/5 flex flex-col gap-6'>
                     <h1 className='text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold'>
                         {data.title}
                     </h1>
@@ -48,9 +48,6 @@ const SinglePostPage = () => {
                         {data.desc}
                     </p>
                 </div>
-                {data.img && <div className='hidden lg:block w-2/5'>
-                    <Image src={data.img} w="600" className="rounded-2xl" />
-                </div>}
             </div>
             {/**Content */}
             <div className='flex flex-col md:flex-row gap-12 justify-between'>
@@ -59,7 +56,10 @@ const SinglePostPage = () => {
                     __html: DOMPurify.sanitize(data.content)
                 }} />
                 {/**menu */}
-                <div className='px-4 h-max sticky top-8'>
+                <div className='px-4 h-max sticky top-8 flex flex-col gap-6'>
+                    {data.img && (<div className='hidden lg:block w-2/5 flex justify-center'>
+                        <Image src={data.img} w="600" className="rounded-2xl max-w-sm w-full" />
+                    </div>)}
                     <h1 className='mb-4 text-sm font-medium'>
                         Author
                     </h1>
@@ -69,7 +69,7 @@ const SinglePostPage = () => {
                                 <div className="w-12 h-12 rounded-full overflow-hidden">
                                     <Image
                                         src={data.user.img}
-                                        className="w-full h-full object-cover"
+                                        className="w-12 h-12 rounded-full object-cover"
                                         w="48"
                                         h="48"
                                     />
@@ -78,12 +78,8 @@ const SinglePostPage = () => {
                             <Link className='text-[rgba(255,119,119,1)]'>{data.user.username}</Link>
                         </div>
                         <p className='text-sm text-white'>
-                            User description be like sameple txext
+                            {data.user.desc}
                         </p>
-                        <div className='flex gap-2'>
-                            <Link><Image src="facebook.svg" /></Link>
-                            <Link><Image src="instagram.svg" /></Link>
-                        </div>
                     </div>
                     <PostMenuActions post={data} />
                     <h1 className='mt-8 mb-4 text-sm font-medium'>

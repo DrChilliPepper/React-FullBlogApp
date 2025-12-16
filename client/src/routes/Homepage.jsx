@@ -20,10 +20,10 @@ const Homepage = () => {
                 {/* titles */}
                 <div className=''>
                     <h1 className='text-2xl md:text-5xl lg:text-6xl font-bold'>
-                        Sample text keklet lmao
+                        Smokes
                     </h1>
                     <p className='mt-8 text-md md:text-xl'>
-                        Sample para lmao kek
+                        A simple forum/blog project made by me
                     </p>
                 </div>
                 {/**Animated Buttons */}
