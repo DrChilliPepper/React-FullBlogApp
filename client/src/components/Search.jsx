@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 const Search = () => {
-    const location = useLocation
+    const location = useLocation()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
 

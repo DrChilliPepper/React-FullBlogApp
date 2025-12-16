@@ -6,7 +6,7 @@ const SideMenu = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const handleFilterChange = e => {
+    const handleFilterChange = (e) => {
         if (searchParams.get("sort") !== e.target.value) {
             setSearchParams({
                 ...Object.fromEntries(searchParams.entries()),
@@ -14,6 +14,15 @@ const SideMenu = () => {
             })
         }
     }
+    const handleCategoryChange = (category) => {
+        if (searchParams.get("cat") !== category) {
+            setSearchParams({
+                ...Object.fromEntries(searchParams.entries()),
+                cat: category
+            })
+        }
+    }
+
 
     return (
         <div className='px-4 h-max sticky top-8'>
@@ -45,12 +54,12 @@ const SideMenu = () => {
                 Categories
             </h1>
             <div className='flex flex-col gap-4 text-sm'>
-                <Link className="underline" to="/posts">All</Link>
-                <Link className="underline" to="/posts?cat=web-design">Web Design</Link>
-                <Link className="underline" to="/posts?cat=development">Development</Link>
-                <Link className="underline" to="/posts?cat=piracy-talks">Piracy</Link>
-                <Link className="underline" to="/posts?cat=brainrot">Brainrot</Link>
-                <Link className="underline" to="/posts?cat=marketing">Marketing</Link>
+                <span className='underline cursor-pointer' onClick={() => handleCategoryChange("general")}>All</span>
+                <span className='underline cursor-pointer' onClick={() => handleCategoryChange("web-design")}>Web Design</span>
+                <span className='underline cursor-pointer' onClick={() => handleCategoryChange("development")}>Development</span>
+                <span className='underline cursor-pointer' onClick={() => handleCategoryChange("piracy-talks")}>Piracy</span>
+                <span className='underline cursor-pointer' onClick={() => handleCategoryChange("brainrot")}>Brainrot</span>
+                <span className='underline cursor-pointer' onClick={() => handleCategoryChange("marketing")}>Marketing</span>
             </div>
         </div>
     )
